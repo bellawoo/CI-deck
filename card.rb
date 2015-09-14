@@ -1,5 +1,6 @@
 class Card
   attr_reader :face_value, :suit
+
   def initialize rank, suit
     @rank, @suit = rank, suit
     @face_value = @rank
@@ -12,6 +13,7 @@ class Card
       return 1
     else
       @rank
+    end
   end
 
   def to_s
