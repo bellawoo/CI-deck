@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'pry'
 
 require './card.rb'
 require './deck.rb'
@@ -28,18 +29,44 @@ class TestCard < Minitest::Test
 end
 
 class TestDeck < Minitest::Test
-  def test_counting_cards
+  def test_a_complete_deck
     deck = Deck.new
 
     assert_equal deck.cards.count, 52
   end
 
-  def test_tracking_draws
+  def test_deck_can_track_draws
     deck = Deck.new
     drawn_card = deck.draw
-    
+
     assert_equal deck.cards.count, 51
     refute_includes deck.cards, drawn_card
     assert_includes deck.drawn, drawn_card
+  end
+
+  def test_deck_can_shuffle_cards
+    correct_deck = Deck.new
+    deck = Deck.new
+    deck.shuffle
+
+    refute_equal deck.cards, correct_deck.cards
+  end
+
+  def test_drawing_cards
+    correct_deck = Deck.new
+    deck = Deck.new
+    deck.draw
+# binding.pry
+    assert_includes correct_deck.cards, deck.drawn.first
+    assert_equal deck.cards.count, 51
+  end
+
+  def test_can_cut_deck
+    correct_deck = Deck.new
+    deck = Deck.new
+    deck.cut
+
+    assert_equal deck.cards.first, correct_deck.cards[26]
+    assert_equal deck.cards.last, correct_deck.cards[25]
   end
 end
