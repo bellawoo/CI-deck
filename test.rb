@@ -27,5 +27,19 @@ class TestCard < Minitest::Test
   end
 end
 
-# class TestDeck < Minitest::Test
-# end
+class TestDeck < Minitest::Test
+  def test_counting_cards
+    deck = Deck.new
+
+    assert_equal deck.cards.count, 52
+  end
+
+  def test_tracking_draws
+    deck = Deck.new
+    drawn_card = deck.draw
+    
+    assert_equal deck.cards.count, 51
+    refute_includes deck.cards, drawn_card
+    assert_includes deck.drawn, drawn_card
+  end
+end
